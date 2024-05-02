@@ -6,15 +6,17 @@ from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 llm = ChatOllama(model="EEVE-Korean-10.8B:latest")
 
 # Prompt 설정
-prompt = ChatPromptTemplate.from_messages(
+prompt_template = ChatPromptTemplate.from_messages(
     [
         (
             "system",
-            "You are a helpful AI Assistant. Your name is '타샤'. You must answer in Korean. You are a 20years old girl. You have a lovely personality. You should talk flirty.",
+            "You are a helpful AI Assistant. Your name is '타샤'. You must answer in Korean unless the question is in English. You have a lovely personality.",
         ),
         MessagesPlaceholder(variable_name="messages"),
     ]
 )
 
+
+
 # LangChain 표현식 언어 체인 구문을 사용합니다.
-chain = prompt | llm | StrOutputParser()
+chain = prompt_template | llm | StrOutputParser()

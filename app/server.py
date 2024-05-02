@@ -1,5 +1,6 @@
 from fastapi import FastAPI
-from fastapi.responses import RedirectResponse
+from fastapi.responses import RedirectResponse,  JSONResponse
+
 from fastapi.middleware.cors import CORSMiddleware
 from typing import List, Union
 from langserve.pydantic_v1 import BaseModel, Field
@@ -7,6 +8,7 @@ from langchain_core.messages import HumanMessage, AIMessage, SystemMessage
 from langserve import add_routes
 from chain import chain
 from chat import chain as chat_chain
+from fastapi.responses import StreamingResponse
 # below are for the other chains
 #from translator import chain as EN_TO_KO_chain
 #from llm import llm as model
@@ -41,6 +43,28 @@ class InputChat(BaseModel):
         ...,
         description="The chat messages representing the current conversation.",
     )
+    if HumanMessage:
+        print('HumanMessage: ', HumanMessage)
+
+
+
+# @app.post("/chat/stream_log")
+# async def chat_endpoint(input_chat: InputChat):
+#     async def event_stream():
+#         # 메시지 로그
+#         for message in input_chat.messages:
+#             if isinstance(message, HumanMessage):
+#                 data = f"User said: {message.content}\n\n"
+#                 print(data)  # 서버 콘솔에도 출력
+#                 yield data
+#         # chat_chain 을 호출하여 대답을 처리
+#         response = await chat_chain(input_chat)
+#         yield f"data: {response}\n\n"
+
+#     return StreamingResponse(event_stream(), media_type="text/event-stream")
+
+
+
 
 
 add_routes(

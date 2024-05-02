@@ -1,3 +1,5 @@
+fastapi
+langserve
 sse_starlette
 openai
 langchain
